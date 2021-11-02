@@ -9,6 +9,7 @@ public class SportiveLocationRepo implements ISportiveLocationRepo{
     public SportiveLocationRepo(SessionFactory sessionFactory){
         this.sessionFactory = sessionFactory;
     }
+
     @Override
     public SportiveLocation findOne(int id) {
         return null;

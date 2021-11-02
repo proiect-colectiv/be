@@ -9,6 +9,7 @@ public class UserRepo implements IUserRepo{
     public UserRepo(SessionFactory sessionFactory){
         this.sessionFactory = sessionFactory;
     }
+
     @Override
     public User findOne(int id) {
         return null;

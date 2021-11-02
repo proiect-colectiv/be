@@ -5,6 +5,11 @@ import com.proiect_colectiv.repository.ISportiveLocationRepo;
 
 public class SportiveLocationService implements ISportiveLocationService{
     public ISportiveLocationRepo sportiveLocationRepo;
+
+    public SportiveLocationService(ISportiveLocationRepo sportiveLocationRepo) {
+        this.sportiveLocationRepo = sportiveLocationRepo;
+    }
+
     @Override
     public SportiveLocation findOne(int id) {
         return null;

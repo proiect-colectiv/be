@@ -5,6 +5,11 @@ import com.proiect_colectiv.repository.IUserRepo;
 
 public class UserService implements IUserService{
     public IUserRepo userRepo;
+
+    public UserService(IUserRepo userRepo) {
+        this.userRepo = userRepo;
+    }
+
     @Override
     public User findOne(int id) {
         return null;

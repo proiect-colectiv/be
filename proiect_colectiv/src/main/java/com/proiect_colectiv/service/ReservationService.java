@@ -6,6 +6,11 @@ import com.proiect_colectiv.repository.IReservationRepo;
 
 public class ReservationService implements IReservationService{
     public IReservationRepo reservationRepo;
+
+    public ReservationService(IReservationRepo reservationRepo) {
+        this.reservationRepo = reservationRepo;
+    }
+
     @Override
     public Reservation findOne(int id) {
         return null;
