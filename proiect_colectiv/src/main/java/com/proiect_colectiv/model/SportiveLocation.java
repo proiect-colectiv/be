@@ -1,7 +1,9 @@
 package com.proiect_colectiv.model;
 
 
+import javax.persistence.ElementCollection;
 import java.time.*;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -13,9 +15,9 @@ public class SportiveLocation extends Entity{
     private Double rentPrice;
     private LocalTime openTime;
     private LocalTime closeTime;
-    private Set<Days> openDays;
+    private Set<Day> openDays;
 
-    public SportiveLocation(Long ID,String name, String adress, String description, Double rentPrice, LocalTime openTime, LocalTime closeTime, Set<Days> openDays) {
+    public SportiveLocation(Long ID,String name, String adress, String description, Double rentPrice, LocalTime openTime, LocalTime closeTime, Set<Day> openDays) {
         super(ID);
         this.name = name;
         this.adress = adress;
@@ -24,6 +26,22 @@ public class SportiveLocation extends Entity{
         this.openTime = openTime;
         this.closeTime = closeTime;
         this.openDays = openDays;
+    }
+
+    public SportiveLocation(String name, String adress, String description, Double rentPrice, LocalTime openTime, LocalTime closeTime, Set<Day> openDays) {
+        this.name = name;
+        this.adress = adress;
+        this.description = description;
+        this.rentPrice = rentPrice;
+        this.openTime = openTime;
+        this.closeTime = closeTime;
+        this.openDays = openDays;
+    }
+
+
+
+    public SportiveLocation() {
+
     }
 
     public String getName() {
@@ -74,12 +92,25 @@ public class SportiveLocation extends Entity{
         this.closeTime = closeTime;
     }
 
-    public Set<Days> getOpenDays() {
+    public Set<Day> getOpenDays() {
         return openDays;
     }
 
-    public void setOpenDays(Set<Days> openDays) {
+    public void setOpenDays(Set<Day> openDays) {
         this.openDays = openDays;
+    }
+
+    @Override
+    public String toString() {
+        return "SportiveLocation{" +
+                "name='" + name + '\'' +
+                ", adress='" + adress + '\'' +
+                ", description='" + description + '\'' +
+                ", rentPrice=" + rentPrice +
+                ", openTime=" + openTime +
+                ", closeTime=" + closeTime +
+                ", openDays=" + openDays +
+                '}';
     }
 
     //TODO: image discussion

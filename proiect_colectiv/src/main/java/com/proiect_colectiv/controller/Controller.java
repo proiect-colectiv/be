@@ -1,10 +1,8 @@
 package com.proiect_colectiv.controller;
 
 
-import com.proiect_colectiv.model.Days;
+import com.proiect_colectiv.model.Day;
 import com.proiect_colectiv.model.SportiveLocation;
-import com.proiect_colectiv.model.User;
-import org.apache.tomcat.jni.Local;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +20,7 @@ public class Controller {
 
     //placeholder list until the flow of data from DB -> repo-> service is ready to use
     static List<SportiveLocation> replacementList = new ArrayList<>();
-    static Set<Days> allDays = new HashSet<>(Arrays.asList(Days.values()));
+    static Set<Day> allDays = new HashSet<>(Arrays.asList(Day.values()));
     static{
         replacementList.add(new SportiveLocation(1l,"Baza Sportiva Gheorgheni","Strada Alexandru Vaida Voevod, Cluj-Napoca","Centru sportiv cu de toate pentru toti.",120d, LocalTime.of(6,0),LocalTime.of(23,00), allDays));
         replacementList.add(new SportiveLocation(2l,"Baza Test 2","Strada test 2","Descriere test 2",120d, LocalTime.of(6,0),LocalTime.of(22,00), allDays));

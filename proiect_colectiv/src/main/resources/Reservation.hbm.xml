@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.proiect_colectiv.model.Reservation" table="Reservations">
+        <id name="ID" column="id">
+            <generator class="increment"/>
+        </id>
+        <property
+                name="startTime"
+                column="startTime"/>
+        <property
+                name="endTime"
+                column="endTime"/>
+
+        <many-to-one name="owner"
+                     column="owner"
+                     class="com.proiect_colectiv.model.User" />
+
+        <many-to-one name="reservedLocation"
+                     column="reservedLocation"
+                     class="com.proiect_colectiv.model.SportiveLocation" />
+
+        <property
+                name="maxNumberOfPlayers"
+                column="maxNumberOfPlayers"/>
+        <property
+                name="currentNumberOfPlayers"
+                column="currentNumberOfPlayers"/>
+
+    </class>
+</hibernate-mapping>
+
+

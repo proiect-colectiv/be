@@ -1,7 +1,7 @@
 package com.proiect_colectiv.service;
 
 import com.proiect_colectiv.model.SportiveLocation;
-import com.proiect_colectiv.repository.ISportiveLocationRepo;
+import com.proiect_colectiv.repository.RepositoryInterfaces.ISportiveLocationRepo;
 
 public class SportiveLocationService implements ISportiveLocationService{
     public ISportiveLocationRepo sportiveLocationRepo;
@@ -11,7 +11,7 @@ public class SportiveLocationService implements ISportiveLocationService{
     }
 
     @Override
-    public SportiveLocation findOne(int id) {
+    public SportiveLocation findOne(Long id) {
         return null;
     }
 
@@ -26,7 +26,7 @@ public class SportiveLocationService implements ISportiveLocationService{
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
 
     }
 

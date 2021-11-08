@@ -1,8 +1,7 @@
 package com.proiect_colectiv.service;
 
 import com.proiect_colectiv.model.Reservation;
-import com.proiect_colectiv.repository.IRepo;
-import com.proiect_colectiv.repository.IReservationRepo;
+import com.proiect_colectiv.repository.RepositoryInterfaces.IReservationRepo;
 
 public class ReservationService implements IReservationService{
     public IReservationRepo reservationRepo;
@@ -12,7 +11,7 @@ public class ReservationService implements IReservationService{
     }
 
     @Override
-    public Reservation findOne(int id) {
+    public Reservation findOne(Long id) {
         return null;
     }
 
@@ -27,7 +26,7 @@ public class ReservationService implements IReservationService{
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
 
     }
 

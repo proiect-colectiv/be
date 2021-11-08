@@ -1,7 +1,7 @@
 package com.proiect_colectiv.service;
 
 import com.proiect_colectiv.model.User;
-import com.proiect_colectiv.repository.IUserRepo;
+import com.proiect_colectiv.repository.RepositoryInterfaces.IUserRepo;
 
 public class UserService implements IUserService{
     public IUserRepo userRepo;
@@ -11,7 +11,7 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public User findOne(int id) {
+    public User findOne(Long id) {
         return null;
     }
 
@@ -26,7 +26,7 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
 
     }
 

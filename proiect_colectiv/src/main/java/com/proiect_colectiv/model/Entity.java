@@ -10,6 +10,8 @@ public class Entity implements Serializable {
         this.ID = id;
     }
 
+    public Entity() {}
+
     public Long getID() {
         return ID;
     }

@@ -5,10 +5,13 @@ public class User extends Entity{
     private String username;
     private String password;
 
-    public User(Long ID,String username, String password) {
-        super(ID);
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public User() {
+        super();
     }
 
     public String getUsername() {
@@ -25,5 +28,13 @@ public class User extends Entity{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }
