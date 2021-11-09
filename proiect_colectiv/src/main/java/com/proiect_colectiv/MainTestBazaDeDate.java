@@ -22,7 +22,7 @@ public class MainTestBazaDeDate {
     public static void main(String[] args) {
 
         //ASTA MERGE
-        /*
+
         IUserRepo userRepo=new UserRepo();
         userRepo.save(new User("Ovidiu","sasesasepoartaincasa"));
         userRepo.save(new User("Radu","patrudedoi"));
@@ -34,25 +34,25 @@ public class MainTestBazaDeDate {
         userRepo.delete(de_sters.getID());
         for(User user: userRepo.findAll()){
             System.out.println(user);
-        }*/
+        }
 
         //SI ASTA MERGE
-        /*
+
         ISportiveLocationRepo repo= new SportiveLocationRepo();
         repo.save(new SportiveLocation("Terene de forbal", "acasa", "e naspa", 69.69, LocalTime.now(),LocalTime.now(),
                 new HashSet<Day>(Arrays.asList( Day.MONDAY,Day.FRIDAY)){
         }));
 
-        for(SportiveLocation sl:repo.findAll()){
-            System.out.println(sl);
-        }*/
-        IUserRepo userRepo=new UserRepo();
-        ISportiveLocationRepo sprepo= new SportiveLocationRepo();
-        IReservationRepo repo=new ReservationRepo();
-        repo.save(new Reservation(LocalDateTime.now(),LocalDateTime.now(),userRepo.findOne(1L),sprepo.findOne(1L),new Integer(10),new Integer(4)));
-
-        for(Reservation sl:repo.findAll()) {
-            System.out.println(sl);
-        }
+//        for(SportiveLocation sl:repo.findAll()){
+//            System.out.println(sl);
+//        }
+//        IUserRepo userRepo=new UserRepo();
+//        ISportiveLocationRepo sprepo= new SportiveLocationRepo();
+//        IReservationRepo repo=new ReservationRepo();
+//        repo.save(new Reservation(LocalDateTime.now(),LocalDateTime.now(),userRepo.findOne(1L),sprepo.findOne(1L),new Integer(10),new Integer(4)));
+//
+//        for(Reservation sl:repo.findAll()) {
+//            System.out.println(sl);
+//        }
     }
 }
