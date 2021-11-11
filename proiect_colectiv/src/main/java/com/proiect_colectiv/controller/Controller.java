@@ -2,21 +2,38 @@ package com.proiect_colectiv.controller;
 
 
 import com.proiect_colectiv.model.Day;
+import com.proiect_colectiv.model.Reservation;
 import com.proiect_colectiv.model.SportiveLocation;
+import com.proiect_colectiv.model.User;
+import com.proiect_colectiv.repository.RepositoryInterfaces.IReservationRepo;
+import com.proiect_colectiv.service.IReservationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.UnsatisfiedServletRequestParameterException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 
 @CrossOrigin
 @RestController()
 public class Controller {
+
+
+//    @Autowired
+//    IReservationService reservationService;
+
+
+    //shortcut catre date :))
+    @Autowired
+    IReservationRepo reservationRepo;
+
 
     //placeholder list until the flow of data from DB -> repo-> service is ready to use
     static List<SportiveLocation> replacementList = new ArrayList<>();
@@ -65,6 +82,47 @@ public class Controller {
         return new ResponseEntity<>("Sportive location don't exist!",HttpStatus.NOT_FOUND);
     }
 
+
+    /**
+     *          url :  http://localhost:8080/proiectcolectiv/reservations
+     *
+     * @return
+     */
+    @GetMapping(path = "reservations", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAllReservations(){
+
+            // code to use after proper data retrieve from db
+//        Iterable<Reservation> reservations = reservationRepo.findAll();
+//        List<Reservation> responseList = new ArrayList<>();
+//        if(reservations != null){
+//           for(var res: reservations){
+//               responseList.add(res);
+//           }
+//           return new ResponseEntity<List<Reservation>>(responseList,HttpStatus.OK);
+//        }
+//        return new ResponseEntity<String>("Reservations can't be found!", HttpStatus.INTERNAL_SERVER_ERROR);
+//
+
+        //using mock data
+        List<Reservation> mockList = new ArrayList<>();
+
+        User u1 = new User("cineva", "parola_mea");
+        u1.setID(1l);
+        User u2 = new User("altcineva", "parola_mea2");
+        u1.setID(2l);
+
+        SportiveLocation s1 = new SportiveLocation(1l, "Baza sportiva Gheorgheni", "Undeva langa Iulius Mall, nr. 33", "Loc cu de toate pentru recreatie.", 100d, LocalTime.of(06, 00), LocalTime.of(22, 00), new HashSet<Day>(Arrays.asList(Day.values())){});
+
+
+        mockList.add(new Reservation(1l,LocalDateTime.of(2021,11,20,14,00,00),LocalDateTime.of(2021,11,20,16,00,00),u1,s1));
+        mockList.add(new Reservation(2l,LocalDateTime.of(2021,11,21,16,00,00),LocalDateTime.of(2021,11,21,18,00,00),u2,s1));
+        mockList.get(0).setCurrentNumberOfPlayers(7);
+        mockList.get(1).setCurrentNumberOfPlayers(5);
+        mockList.get(0).setMaxNumberOfPlayers(11);
+        mockList.get(1).setMaxNumberOfPlayers(11);
+
+        return new ResponseEntity<>(mockList,HttpStatus.OK);
+    }
 
     //test method
     @GetMapping(path = "hello",produces = MediaType.APPLICATION_JSON_VALUE)

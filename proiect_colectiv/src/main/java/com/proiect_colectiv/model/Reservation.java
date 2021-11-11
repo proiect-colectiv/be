@@ -28,6 +28,8 @@ public class Reservation extends Entity{
         this.currentNumberOfPlayers=currentNumberOfPlayers;
     }
 
+
+
     public Reservation() {
 
     }

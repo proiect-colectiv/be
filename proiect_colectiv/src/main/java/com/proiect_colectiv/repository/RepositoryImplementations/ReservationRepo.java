@@ -7,10 +7,13 @@ import com.proiect_colectiv.repository.RepositoryInterfaces.IReservationRepo;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import java.util.Iterator;
 import java.util.List;
 
+
+@Repository
 public class ReservationRepo implements IReservationRepo {
     private SessionFactory sessionFactory;
 
