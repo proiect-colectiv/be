@@ -15,13 +15,15 @@
                 name="endTime"
                 column="endTime"/>
 
-        <many-to-one name="owner"
-                     column="owner"
-                     class="com.proiect_colectiv.model.User" />
+        <many-to-one  name="owner"
+                     class="com.proiect_colectiv.model.User"
+                      lazy="false"
+                     column="owner" />
 
-        <many-to-one name="reservedLocation"
-                     column="reservedLocation"
-                     class="com.proiect_colectiv.model.SportiveLocation" />
+        <many-to-one  name="reservedLocation"
+                     class="com.proiect_colectiv.model.SportiveLocation"
+                      lazy="false"
+                     column="reservedLocation" />
 
         <property
                 name="maxNumberOfPlayers"

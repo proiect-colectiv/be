@@ -85,6 +85,8 @@ public class Reservation extends Entity{
         return "Reservation{" +
                 "startTime=" + startTime +
                 ", endTime=" + endTime +
+                ", owner=" + owner.toString() +
+                ", reservedLocation=" + reservedLocation.toString() +
                 ", maxNumberOfPlayers=" + maxNumberOfPlayers +
                 ", currentNumberOfPlayers=" + currentNumberOfPlayers +
                 '}';

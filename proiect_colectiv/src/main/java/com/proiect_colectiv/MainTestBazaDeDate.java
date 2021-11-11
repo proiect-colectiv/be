@@ -46,10 +46,7 @@ public class MainTestBazaDeDate {
         for(SportiveLocation sl:repo.findAll()){
             System.out.println(sl);
         }*/
-        IUserRepo userRepo=new UserRepo();
-        ISportiveLocationRepo sprepo= new SportiveLocationRepo();
         IReservationRepo repo=new ReservationRepo();
-        repo.save(new Reservation(LocalDateTime.now(),LocalDateTime.now(),userRepo.findOne(1L),sprepo.findOne(1L),new Integer(10),new Integer(4)));
 
         for(Reservation sl:repo.findAll()) {
             System.out.println(sl);

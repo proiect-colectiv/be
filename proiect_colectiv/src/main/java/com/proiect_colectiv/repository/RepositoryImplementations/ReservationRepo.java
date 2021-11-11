@@ -1,12 +1,14 @@
 package com.proiect_colectiv.repository.RepositoryImplementations;
 
 import com.proiect_colectiv.model.Reservation;
+import com.proiect_colectiv.model.SportiveLocation;
 import com.proiect_colectiv.model.User;
 import com.proiect_colectiv.repository.RepositoryInterfaces.IReservationRepo;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class ReservationRepo implements IReservationRepo {
@@ -42,7 +44,7 @@ public class ReservationRepo implements IReservationRepo {
             Transaction tx = null;
             try {
                 tx = session.beginTransaction();
-                List<Reservation> list = session.createQuery("from Reservation", Reservation.class).list();
+                List<Reservation> list = session.createQuery("from Reservation",Reservation.class).list();
                 tx.commit();
                 return list;
             } catch (RuntimeException ex) {

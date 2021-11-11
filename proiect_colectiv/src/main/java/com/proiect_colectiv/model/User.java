@@ -1,6 +1,8 @@
 package com.proiect_colectiv.model;
 
-public class User extends Entity{
+import java.io.Serializable;
+
+public class User extends Entity implements Serializable {
 
     private String username;
     private String password;

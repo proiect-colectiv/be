@@ -2,12 +2,13 @@ package com.proiect_colectiv.model;
 
 
 import javax.persistence.ElementCollection;
+import java.io.Serializable;
 import java.time.*;
 import java.util.HashSet;
 import java.util.Set;
 
 
-public class SportiveLocation extends Entity{
+public class SportiveLocation extends Entity implements Serializable {
 
     private String name;
     private String adress;
