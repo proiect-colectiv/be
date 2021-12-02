@@ -94,6 +94,17 @@ public class ReservationRepo implements IReservationRepo {
 
     @Override
     public void update(Reservation entity) {
-
+        try(Session session = sessionFactory.openSession()){
+            Transaction tx=null;
+            try{
+                tx = session.beginTransaction();
+                Reservation reservation = (Reservation) session.load( Reservation.class, entity.getID());
+                reservation.setCurrentNumberOfPlayers(entity.getCurrentNumberOfPlayers());
+                tx.commit();
+            } catch(RuntimeException ex){
+                if (tx!=null)
+                    tx.rollback();
+            }
+        }
     }
 }

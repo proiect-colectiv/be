@@ -52,6 +52,8 @@ public class SportiveLocationRepo implements ISportiveLocationRepo {
             } catch (RuntimeException ex) {
                 if (tx != null)
                     tx.rollback();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
         return null;
@@ -93,6 +95,33 @@ public class SportiveLocationRepo implements ISportiveLocationRepo {
 
     @Override
     public void update(SportiveLocation entity) {
-
+        /*try(Session session = sessionFactory.openSession()) {
+            Transaction tx = null;
+            try {
+                tx = session.beginTransaction();
+                //session.update(entity);
+                session.createQuery("update SportiveLocation set name='"+entity.getName()+"', description='"+entity.getDescription()+"', rentPrice='"+entity.getRentPrice().toString()+"', openDays='"+entity.getOpenDays().size()+"'  where id="+entity.getID()).executeUpdate();
+                tx.commit();
+            } catch (RuntimeException ex) {
+                if (tx != null)
+                    tx.rollback();
+            }
+        }*/
+        try(Session session = sessionFactory.openSession()){
+            Transaction tx=null;
+            try{
+                tx = session.beginTransaction();
+                SportiveLocation sportiveLocation = (SportiveLocation) session.load( SportiveLocation.class, entity.getID());
+                sportiveLocation.setRentPrice(entity.getRentPrice());
+                sportiveLocation.setDescription(entity.getDescription());
+                sportiveLocation.setCloseTime(entity.getCloseTime());
+                sportiveLocation.setOpenTime(entity.getOpenTime());
+                sportiveLocation.setOpenDays(entity.getOpenDays());
+                tx.commit();
+            } catch(RuntimeException ex){
+                if (tx!=null)
+                    tx.rollback();
+            }
+        }
     }
 }

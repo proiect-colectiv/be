@@ -12,12 +12,12 @@ public class SportiveLocationService implements ISportiveLocationService{
 
     @Override
     public SportiveLocation findOne(Long id) {
-        return null;
+        return sportiveLocationRepo.findOne(id);
     }
 
     @Override
     public Iterable<SportiveLocation> findAll() {
-        return null;
+        return sportiveLocationRepo.findAll();
     }
 
     @Override

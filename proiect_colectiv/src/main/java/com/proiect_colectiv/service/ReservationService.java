@@ -18,12 +18,12 @@ public class ReservationService implements IReservationService{
 
     @Override
     public Reservation findOne(Long id) {
-        return null;
+        return reservationRepo.findOne(id);
     }
 
     @Override
     public Iterable<Reservation> findAll() {
-        return null;
+        return reservationRepo.findAll();
     }
 
     @Override

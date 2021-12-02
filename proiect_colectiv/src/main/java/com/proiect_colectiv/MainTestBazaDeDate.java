@@ -10,6 +10,8 @@ import com.proiect_colectiv.repository.RepositoryImplementations.UserRepo;
 import com.proiect_colectiv.repository.RepositoryInterfaces.IReservationRepo;
 import com.proiect_colectiv.repository.RepositoryInterfaces.ISportiveLocationRepo;
 import com.proiect_colectiv.repository.RepositoryInterfaces.IUserRepo;
+import com.proiect_colectiv.service.IReservationService;
+import com.proiect_colectiv.service.ReservationService;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -37,19 +39,38 @@ public class MainTestBazaDeDate {
         }*/
 
         //SI ASTA MERGE
-        /*
-        ISportiveLocationRepo repo= new SportiveLocationRepo();
+
+        /*ISportiveLocationRepo repo= new SportiveLocationRepo();
         repo.save(new SportiveLocation("Terene de forbal", "acasa", "e naspa", 69.69, LocalTime.now(),LocalTime.now(),
                 new HashSet<Day>(Arrays.asList( Day.MONDAY,Day.FRIDAY)){
         }));
+        repo.save(new SportiveLocation("Baza Sportiva Gheorgheni","Strada Alexandru Vaida Voevod, Cluj-Napoca","",70,LocalTime.of(10,00),LocalTime.of(20,00),  new HashSet<Day>(Arrays.asList( Day.MONDAY,Day.FRIDAY)){));
 
         for(SportiveLocation sl:repo.findAll()){
             System.out.println(sl);
         }*/
         IReservationRepo repo=new ReservationRepo();
+        IReservationService service = new ReservationService(repo);
 
-        for(Reservation sl:repo.findAll()) {
+        System.out.println("AICI!!!!!!!!!!!!");
+        for(Reservation sl:service.findAll()) {
+            System.out.println("AICI!!!!!!!!!!!! IN FOR");
             System.out.println(sl);
         }
+
+        IUserRepo userRepo = new UserRepo();
+        User user = userRepo.findOne(1L);
+        ISportiveLocationRepo sportiveLocationRepo = new SportiveLocationRepo();
+        SportiveLocation sportiveLocation = sportiveLocationRepo.findOne(1L);
+        sportiveLocation.setDescription("Descriere noua");
+        System.out.println(sportiveLocation);
+        sportiveLocation.setCloseTime(LocalTime.of(10,0,0,0));
+        sportiveLocation.setOpenTime(LocalTime.of(11,0,0,0));
+        sportiveLocation.setRentPrice(100.0);
+        sportiveLocationRepo.update(sportiveLocation);
+        Reservation reservation = repo.findOne(1L);
+        reservation.setCurrentNumberOfPlayers(3);
+        repo.update(reservation);
+
     }
 }
