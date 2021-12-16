@@ -5,9 +5,11 @@ import com.proiect_colectiv.repository.RepositoryInterfaces.IUserRepo;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class UserRepo implements IUserRepo {
     private SessionFactory sessionFactory;
 
@@ -105,6 +107,8 @@ public class UserRepo implements IUserRepo {
 
     @Override
     public User findOneByUsername(String username) {
+        //TODO: needs this function for registration feature
+        //      It needs to return null if there is no user with given username
         return null;
     }
 }

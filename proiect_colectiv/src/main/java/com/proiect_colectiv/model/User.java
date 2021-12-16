@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class User extends Entity implements Serializable {
 
+    //TODO: add fields firstName, lastName, email
     private String username;
     private String password;
 

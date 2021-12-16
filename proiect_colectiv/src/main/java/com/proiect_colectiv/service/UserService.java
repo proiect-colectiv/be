@@ -2,8 +2,13 @@ package com.proiect_colectiv.service;
 
 import com.proiect_colectiv.model.User;
 import com.proiect_colectiv.repository.RepositoryInterfaces.IUserRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserService implements IUserService{
+
+    @Autowired
     public IUserRepo userRepo;
 
     public UserService(IUserRepo userRepo) {
@@ -21,8 +26,8 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public void save(User entity) {
-
+    public void save(User user) {
+        userRepo.save(user);
     }
 
     @Override
@@ -37,6 +42,6 @@ public class UserService implements IUserService{
 
     @Override
     public User findUserByUsername(String username) {
-        return null;
+        return userRepo.findOneByUsername(username);
     }
 }
