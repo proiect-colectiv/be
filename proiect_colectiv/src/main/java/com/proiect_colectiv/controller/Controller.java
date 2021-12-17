@@ -28,6 +28,7 @@ public class Controller {
     private static final String INVALID_CREDENTIALS_ERROR_MESSAGE = "Invalid username or password!";
     private static final String USERNAME_ALREADY_EXISTS_ERROR_MESSAGE = "Username already exists!";
     private static final String SUCCESS_MESSAGE = "Succes!";
+    private static final String INVALID_ID_ERROR_MESSAGE = "Invalid id!";
 
 
 //    @Autowired
@@ -46,7 +47,6 @@ public class Controller {
 
     @Autowired
     private IUserService userService;
-
 
 
     /**
@@ -106,7 +106,7 @@ public class Controller {
 
     /**
      * url:    http://localhost:8080/proiectcolectiv/registration
-     *
+     * <p>
      * Create a new User with provided parameters
      *
      * @param request - the request object that needs to contain following fields
@@ -137,6 +137,43 @@ public class Controller {
 
     }
 
+
+    /**
+     * url:   http://localhost:8080/proiectcolectiv/users/{id}
+     * <p>
+     * Provide access to user data through user id
+     *
+     * @param id - user id
+     * @return - the user which has the specified id , if exist
+     * - an error message and 404 NOT_FOUND error message otherwise
+     */
+    @GetMapping(path = "users/{id}")
+    public ResponseEntity<?> getUser(@PathVariable Long id) {
+        User user = userService.findOne(id);
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(INVALID_ID_ERROR_MESSAGE, HttpStatus.NOT_FOUND);
+    }
+
+
+    /**
+     * url:   http://localhost:8080/proiectcolectiv/reservations/{id}
+     * <p>
+     * Provide access to reservation details through reservation id
+     *
+     * @param id - reservation id
+     * @return - the reservation with provided id, if exists
+     * - error message and 404 NOT_FOUND status , otherwise
+     */
+    @GetMapping(path = "reservations/{id}")
+    public ResponseEntity<?> getReservation(@PathVariable Long id) {
+        Reservation reservation = reservationRepo.findOne(id);
+        if (reservation != null) {
+            return new ResponseEntity<>(reservation, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(INVALID_ID_ERROR_MESSAGE, HttpStatus.NOT_FOUND);
+    }
 
 
     //test method

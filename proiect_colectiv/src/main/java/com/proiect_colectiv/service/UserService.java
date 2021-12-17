@@ -17,7 +17,7 @@ public class UserService implements IUserService{
 
     @Override
     public User findOne(Long id) {
-        return null;
+        return userRepo.findOne(id);
     }
 
     @Override
