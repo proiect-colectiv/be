@@ -107,8 +107,21 @@ public class UserRepo implements IUserRepo {
 
     @Override
     public User findOneByUsername(String username) {
-        //TODO: needs this function for registration feature
-        //      It needs to return null if there is no user with given username
+        try (Session session = sessionFactory.openSession()) {
+            Transaction tx=null;
+            try{
+                tx = session.beginTransaction();
+                User user= session.createQuery(" from User where username=:username", User.class)
+                        .setParameter("username", username)
+                        .setMaxResults(1)
+                        .uniqueResult();
+                tx.commit();
+                return user;
+            } catch(RuntimeException ex){
+                if (tx!=null)
+                    tx.rollback();
+            }
+        }
         return null;
     }
 }
