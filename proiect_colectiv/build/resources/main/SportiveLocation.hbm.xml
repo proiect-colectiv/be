@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.proiect_colectiv.model.SportiveLocation" table="SportiveLocations">
+        <id name="ID" column="id">
+            <generator class="increment"/>
+        </id>
+
+        <property
+                name="name"
+                column="name"/>
+        <property
+                name="adress"
+                column="adress"/>
+
+        <property
+                name="description"
+                column="description"/>
+
+        <property
+                name="rentPrice"
+                column="rentPrice"/>
+
+        <property
+                name="openTime"
+                column="openTime"/>
+
+        <property
+                name="closeTime"
+                column="closeTime"/>
+
+        <property
+                name="openDays"
+                type="converted::com.proiect_colectiv.model.ConvertersHibernate.OpenDaysConverter"
+                column="openDays"/>
+
+    </class>
+</hibernate-mapping>
+
+
