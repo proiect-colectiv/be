@@ -11,8 +11,11 @@ import com.proiect_colectiv.repository.RepositoryInterfaces.IReservationRepo;
 import com.proiect_colectiv.repository.RepositoryInterfaces.ISportiveLocationRepo;
 import com.proiect_colectiv.repository.RepositoryInterfaces.IUserRepo;
 import com.proiect_colectiv.service.IReservationService;
+import com.proiect_colectiv.service.IUserService;
 import com.proiect_colectiv.service.ReservationService;
+import com.proiect_colectiv.service.UserService;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Arrays;
@@ -70,7 +73,15 @@ public class MainTestBazaDeDate {
         sportiveLocationRepo.update(sportiveLocation);
         Reservation reservation = repo.findOne(1L);
         reservation.setCurrentNumberOfPlayers(3);
+
         repo.update(reservation);
+
+        repo.filterReservationByLocation(1L);
+        repo.getAllReservationsAfterDate(LocalDateTime.of(2021,11,22,1,1));
+        repo.filterReservationByDay(LocalDate.of(2021,11,21));
+
+        IUserService userService = new UserService(userRepo);
+        System.out.println(userService.validateUser(new User("xxxxxx123_","yy")));
 
     }
 }

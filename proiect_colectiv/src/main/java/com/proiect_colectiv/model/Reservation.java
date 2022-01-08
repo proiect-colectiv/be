@@ -7,7 +7,7 @@ public class Reservation extends Entity{
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private User owner;
-    private SportiveLocation reservedLocation;
+    public SportiveLocation reservedLocation;
     private Integer maxNumberOfPlayers;
     private Integer currentNumberOfPlayers;
 

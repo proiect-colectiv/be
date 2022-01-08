@@ -5,6 +5,9 @@ import com.proiect_colectiv.repository.RepositoryInterfaces.IReservationRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 
 @Service
 public class ReservationService implements IReservationService{
@@ -39,5 +42,20 @@ public class ReservationService implements IReservationService{
     @Override
     public void update(Reservation entity) {
 
+    }
+
+    @Override
+    public Iterable<Reservation> filterReservationByLocation(Long locationID) {
+        return reservationRepo.filterReservationByLocation(locationID);
+    }
+
+    @Override
+    public Iterable<Reservation> filterReservationByDay(LocalDate time) {
+        return reservationRepo.filterReservationByDay(time);
+    }
+
+    @Override
+    public Iterable<Reservation> getAllReservationsAfterDate(LocalDateTime time) {
+        return reservationRepo.getAllReservationsAfterDate(time);
     }
 }

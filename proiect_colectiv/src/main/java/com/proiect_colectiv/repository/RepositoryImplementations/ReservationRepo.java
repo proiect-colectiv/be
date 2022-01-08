@@ -9,6 +9,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Iterator;
 import java.util.List;
 
@@ -106,5 +109,61 @@ public class ReservationRepo implements IReservationRepo {
                     tx.rollback();
             }
         }
+    }
+
+    @Override
+    public Iterable<Reservation> filterReservationByLocation(Long locationID) {
+        try(Session session = sessionFactory.openSession()) {
+            Transaction tx = null;
+            try {
+                tx = session.beginTransaction();
+                List<Reservation> list = session.createQuery("from Reservation R where R.reservedLocation.id=:reservedLocation",Reservation.class).setParameter("reservedLocation",locationID).list();
+                tx.commit();
+                return list;
+            } catch (RuntimeException ex) {
+                if (tx != null)
+                    tx.rollback();
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Iterable<Reservation> filterReservationByDay(LocalDate time) {
+        try(Session session = sessionFactory.openSession()) {
+            Transaction tx = null;
+            try {
+                LocalDateTime time1 = LocalDateTime.of(time.getYear(),time.getMonth(),time.getDayOfMonth(),0,0);
+                LocalDateTime time2 = LocalDateTime.of(time.getYear(),time.getMonth(),time.getDayOfMonth(),23,59,59);
+                tx = session.beginTransaction();
+                List<Reservation> list = session.createQuery("from Reservation R where R.startTime>=:time1 and R.startTime<=:time2",Reservation.class)
+                        .setParameter("time1",time1)
+                        .setParameter("time2",time2)
+                        .list();
+                tx.commit();
+                return list;
+            } catch (RuntimeException ex) {
+                if (tx != null)
+                    tx.rollback();
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Iterable<Reservation> getAllReservationsAfterDate(LocalDateTime time) {
+        try(Session session = sessionFactory.openSession()) {
+            Transaction tx = null;
+            try {
+                tx = session.beginTransaction();
+                List<Reservation> list = session.createQuery("from Reservation R where R.startTime>:time",Reservation.class).setParameter("time",time).list();
+                tx.commit();
+                return list;
+            } catch (RuntimeException ex) {
+                if (tx != null)
+                    tx.rollback();
+            }
+        }
+        return null;
     }
 }

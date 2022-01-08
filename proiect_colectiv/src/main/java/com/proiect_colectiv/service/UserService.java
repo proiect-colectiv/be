@@ -5,6 +5,9 @@ import com.proiect_colectiv.repository.RepositoryInterfaces.IUserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @Service
 public class UserService implements IUserService{
 
@@ -43,5 +46,29 @@ public class UserService implements IUserService{
     @Override
     public User findUserByUsername(String username) {
         return userRepo.findOneByUsername(username);
+    }
+
+    @Override
+    public boolean validateUser(User user) {
+        String regexUsername = "^[A-Za-z0-9_]\\w{5,29}$";
+        Pattern pUsername = Pattern.compile(regexUsername);
+        if (user.getUsername() == null) {
+            return false;
+        }
+        Matcher mUsername = pUsername.matcher(user.getUsername());
+
+        String regexEmail = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+        Pattern pEmail = Pattern.compile(regexEmail);
+        /*if (email == null)
+            return false;
+        Matcher mEmail = pEmail.matcher(user.GetEmail());
+
+        !!! TODO dupa ce se adauga campul email la user se decomenteaza
+
+        */
+        return mUsername.matches(); // && mEmail.matches();
     }
 }

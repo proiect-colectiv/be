@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Entity implements Serializable {
 
-    protected Long ID;
+    public Long ID;
 
     public Entity(Long id) {
         this.ID = id;
