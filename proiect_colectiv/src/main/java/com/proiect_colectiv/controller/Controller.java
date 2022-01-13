@@ -126,10 +126,13 @@ public class Controller {
         }
 
         String encodedPassword = passwordEncoder.encode(request.getPassword());
-        //TODO: use firstName and lastName when the fields will be added to User entity
+        //TODO: integrate email into Request (part of User constructor)
         User user = new User(
                 request.getUsername(),
-                encodedPassword
+                encodedPassword,
+                request.getFirstName(),
+                request.getLastName(),
+                "emai@email.com"
         );
 
         userService.save(user);

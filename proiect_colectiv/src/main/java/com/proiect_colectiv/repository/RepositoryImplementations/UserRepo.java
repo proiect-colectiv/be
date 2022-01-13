@@ -97,6 +97,9 @@ public class UserRepo implements IUserRepo {
                 User user = (User) session.load( User.class, entity.getID());
                 user.setUsername(entity.getUsername());
                 user.setPassword(entity.getPassword());
+                user.setFirstName(entity.getFirstName());
+                user.setLastName(entity.getLastName());
+                user.setEmail(entity.getEmail());
                 tx.commit();
             } catch(RuntimeException ex){
                 if (tx!=null)

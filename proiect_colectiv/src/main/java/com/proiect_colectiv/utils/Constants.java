@@ -13,4 +13,7 @@ public class Constants {
 
     //length between 6 and 25 characters, all letters and numbers and underscore
     public static final Pattern PASSWORD_PATTERN=Pattern.compile("^[a-zA-Z0-9_]{6,25}$");
+
+    //can contain only ASCII letters and digits, with hyphens, underscores and spaces as internal separators
+    public static final Pattern USERNAME_PATTERN=Pattern.compile("/^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/");
 }

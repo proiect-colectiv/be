@@ -51,7 +51,7 @@ public class MainTestBazaDeDate {
 
         for(SportiveLocation sl:repo.findAll()){
             System.out.println(sl);
-        }*/
+        }
         IReservationRepo repo=new ReservationRepo();
         IReservationService service = new ReservationService(repo);
 
@@ -60,7 +60,6 @@ public class MainTestBazaDeDate {
             System.out.println("AICI!!!!!!!!!!!! IN FOR");
             System.out.println(sl);
         }
-
         IUserRepo userRepo = new UserRepo();
         User user = userRepo.findOne(1L);
         ISportiveLocationRepo sportiveLocationRepo = new SportiveLocationRepo();
@@ -81,7 +80,13 @@ public class MainTestBazaDeDate {
         repo.filterReservationByDay(LocalDate.of(2021,11,21));
 
         IUserService userService = new UserService(userRepo);
-        System.out.println(userService.validateUser(new User("xxxxxx123_","yy")));
-
+        System.out.println(userService.validateUser(new User("xxxxxx123_","yy", "first", "last", "email@email.com")));
+        */
+        IUserRepo repo = new UserRepo();
+        IUserService service = new UserService(repo);
+        for(User u : repo.findAll()){
+            System.out.println(u);
+        }
+        System.out.println(service.validateUser(new User("xxxxxx123_","yy", "first", "last", "email@email.com")));
     }
 }

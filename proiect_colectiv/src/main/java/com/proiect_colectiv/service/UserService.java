@@ -62,13 +62,11 @@ public class UserService implements IUserService{
                 "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
                 "A-Z]{2,7}$";
         Pattern pEmail = Pattern.compile(regexEmail);
-        /*if (email == null)
+        if (user.getEmail() == null)
             return false;
-        Matcher mEmail = pEmail.matcher(user.GetEmail());
+        Matcher mEmail = pEmail.matcher(user.getEmail());
 
-        !!! TODO dupa ce se adauga campul email la user se decomenteaza
 
-        */
-        return mUsername.matches(); // && mEmail.matches();
+        return mUsername.matches() && mEmail.matches();
     }
 }

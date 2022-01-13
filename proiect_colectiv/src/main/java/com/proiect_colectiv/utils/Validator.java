@@ -3,6 +3,7 @@ package com.proiect_colectiv.utils;
 import org.springframework.stereotype.Component;
 
 import static com.proiect_colectiv.utils.Constants.PASSWORD_PATTERN;
+import static com.proiect_colectiv.utils.Constants.USERNAME_PATTERN;
 
 
 @Component
@@ -19,11 +20,14 @@ public class Validator {
     }
 
 
-    //TODO: logic for username validation
+    /**
+     * Validate a user
+     *
+     * @return true if user is valid
+     * false , otherwise
+     */
     public boolean validateUsername(String username) {
-        return true;
+        return username.matches(USERNAME_PATTERN.toString());
     }
-
-    ;
 
 }
