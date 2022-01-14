@@ -182,6 +182,27 @@ public class Controller {
     }
 
 
+
+    /**
+     * url:   http://localhost:8080/proiectcolectiv/reservations/{id}/users
+     * <p>
+     * Provide access to users that participate to a reservation
+     *
+     * @param reservationId - id of reservation
+     * @return - a list containing all users that participate to the reservation specified by reservationId
+     *         - 400 BAD_REQUEST status if the reservationId don't exists
+     */
+    @GetMapping(path = "reservations/{reservationId}/users")
+    public ResponseEntity<?> getUsersForReservation(@PathVariable Long reservationId)
+    {
+        //TODO: replace this with list of users that participate to specified reservation
+        List<User> users = (ArrayList<User>) userService.findAll();
+        if (users != null && users.size() > 0) {
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(INVALID_ID_ERROR_MESSAGE, HttpStatus.BAD_REQUEST);
+    }
+
     //test method
     @GetMapping(path = "hello", produces = MediaType.APPLICATION_JSON_VALUE)
     public String hello() {
