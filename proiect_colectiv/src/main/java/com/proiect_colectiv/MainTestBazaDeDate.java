@@ -5,9 +5,11 @@ import com.proiect_colectiv.model.Reservation;
 import com.proiect_colectiv.model.SportiveLocation;
 import com.proiect_colectiv.model.User;
 import com.proiect_colectiv.repository.RepositoryImplementations.ReservationRepo;
+import com.proiect_colectiv.repository.RepositoryImplementations.ReservationUserRepo;
 import com.proiect_colectiv.repository.RepositoryImplementations.SportiveLocationRepo;
 import com.proiect_colectiv.repository.RepositoryImplementations.UserRepo;
 import com.proiect_colectiv.repository.RepositoryInterfaces.IReservationRepo;
+import com.proiect_colectiv.repository.RepositoryInterfaces.IReservationUserRepo;
 import com.proiect_colectiv.repository.RepositoryInterfaces.ISportiveLocationRepo;
 import com.proiect_colectiv.repository.RepositoryInterfaces.IUserRepo;
 import com.proiect_colectiv.service.IReservationService;
@@ -91,7 +93,7 @@ public class MainTestBazaDeDate {
         */
 
         //TEST GetFutureReservations()
-        IReservationRepo repo=new ReservationRepo();
+        /*IReservationRepo repo=new ReservationRepo();
         IReservationService service = new ReservationService(repo);
 
         IUserRepo userRepo = new UserRepo();
@@ -111,7 +113,14 @@ public class MainTestBazaDeDate {
 
         service.findAll();
 
-        service.getFutureReservations();
+        service.getFutureReservations();*/
+
+        //TEST getUsersForReservationId(Long reservationId)
+        IUserRepo userRepo = new UserRepo();
+        IReservationUserRepo reservationUserRepo = new ReservationUserRepo();
+        IUserService userService = new UserService(userRepo,reservationUserRepo);
+
+        userService.getUsersForReservationId(1L);
 
     }
 }
