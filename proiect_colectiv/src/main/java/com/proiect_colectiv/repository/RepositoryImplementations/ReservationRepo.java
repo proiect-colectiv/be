@@ -166,4 +166,21 @@ public class ReservationRepo implements IReservationRepo {
         }
         return null;
     }
+
+    @Override
+    public Iterable<Reservation> getFutureReservations() {
+        try(Session session = sessionFactory.openSession()) {
+            Transaction tx = null;
+            try {
+                tx = session.beginTransaction();
+                List<Reservation> list = session.createQuery("from Reservation R where R.endTime>:time order by startTime asc",Reservation.class).setParameter("time",LocalDateTime.now()).list();
+                tx.commit();
+                return list;
+            } catch (RuntimeException ex) {
+                if (tx != null)
+                    tx.rollback();
+            }
+        }
+        return null;
+    }
 }

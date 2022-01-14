@@ -31,17 +31,17 @@ public class ReservationService implements IReservationService{
 
     @Override
     public void save(Reservation entity) {
-
+        reservationRepo.save(entity);
     }
 
     @Override
     public void delete(Long id) {
-
+        reservationRepo.delete(id);
     }
 
     @Override
     public void update(Reservation entity) {
-
+        reservationRepo.update(entity);
     }
 
     @Override
@@ -57,5 +57,10 @@ public class ReservationService implements IReservationService{
     @Override
     public Iterable<Reservation> getAllReservationsAfterDate(LocalDateTime time) {
         return reservationRepo.getAllReservationsAfterDate(time);
+    }
+
+    @Override
+    public Iterable<Reservation> getFutureReservations() {
+        return reservationRepo.getFutureReservations();
     }
 }

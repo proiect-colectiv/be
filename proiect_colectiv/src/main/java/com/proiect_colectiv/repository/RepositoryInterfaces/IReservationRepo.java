@@ -10,4 +10,5 @@ public interface IReservationRepo extends IRepo<Reservation> {
     Iterable<Reservation> filterReservationByLocation(Long locationID);
     Iterable<Reservation> filterReservationByDay(LocalDate time);
     Iterable<Reservation> getAllReservationsAfterDate(LocalDateTime time);
+    Iterable<Reservation> getFutureReservations();
 }

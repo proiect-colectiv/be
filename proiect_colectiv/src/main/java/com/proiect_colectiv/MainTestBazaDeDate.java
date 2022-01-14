@@ -82,11 +82,36 @@ public class MainTestBazaDeDate {
         IUserService userService = new UserService(userRepo);
         System.out.println(userService.validateUser(new User("xxxxxx123_","yy", "first", "last", "email@email.com")));
         */
-        IUserRepo repo = new UserRepo();
+        /*IUserRepo repo = new UserRepo();
         IUserService service = new UserService(repo);
         for(User u : repo.findAll()){
             System.out.println(u);
         }
         System.out.println(service.validateUser(new User("xxxxxx123_","yy", "first", "last", "email@email.com")));
+        */
+
+        //TEST GetFutureReservations()
+        IReservationRepo repo=new ReservationRepo();
+        IReservationService service = new ReservationService(repo);
+
+        IUserRepo userRepo = new UserRepo();
+        User user = userRepo.findOne(1L);
+
+        ISportiveLocationRepo sportiveLocationRepo = new SportiveLocationRepo();
+        SportiveLocation sportiveLocation = sportiveLocationRepo.findOne(1L);
+
+        service.save(new Reservation(4L,LocalDateTime.of(2022,1,14,19,0),
+                LocalDateTime.of(2022,1,14,19,50),user,sportiveLocation));
+        service.save(new Reservation(5L,LocalDateTime.of(2022,1,14,18,30),
+                LocalDateTime.of(2022,1,14,19,45),user,sportiveLocation));
+        service.save(new Reservation(6L,LocalDateTime.of(2022,1,14,20,0),
+                LocalDateTime.of(2022,1,14,21,0),user,sportiveLocation));
+        service.save(new Reservation(7L,LocalDateTime.of(2022,1,14,18,0),
+                LocalDateTime.of(2022,1,14,20,0),user,sportiveLocation));
+
+        service.findAll();
+
+        service.getFutureReservations();
+
     }
 }

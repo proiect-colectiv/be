@@ -9,4 +9,5 @@ public interface IReservationService extends IService<Reservation> {
     Iterable<Reservation> filterReservationByLocation(Long locationID);
     Iterable<Reservation> filterReservationByDay(LocalDate time);
     Iterable<Reservation> getAllReservationsAfterDate(LocalDateTime time);
+    Iterable<Reservation> getFutureReservations();
 }
