@@ -1,13 +1,12 @@
 package com.proiect_colectiv;
 
-import com.proiect_colectiv.model.Day;
-import com.proiect_colectiv.model.Reservation;
-import com.proiect_colectiv.model.SportiveLocation;
-import com.proiect_colectiv.model.User;
+import com.proiect_colectiv.model.*;
 import com.proiect_colectiv.repository.RepositoryImplementations.ReservationRepo;
+import com.proiect_colectiv.repository.RepositoryImplementations.ReservationUserRepo;
 import com.proiect_colectiv.repository.RepositoryImplementations.SportiveLocationRepo;
 import com.proiect_colectiv.repository.RepositoryImplementations.UserRepo;
 import com.proiect_colectiv.repository.RepositoryInterfaces.IReservationRepo;
+import com.proiect_colectiv.repository.RepositoryInterfaces.IReservationUserRepo;
 import com.proiect_colectiv.repository.RepositoryInterfaces.ISportiveLocationRepo;
 import com.proiect_colectiv.repository.RepositoryInterfaces.IUserRepo;
 import com.proiect_colectiv.service.IReservationService;
@@ -81,12 +80,25 @@ public class MainTestBazaDeDate {
 
         IUserService userService = new UserService(userRepo);
         System.out.println(userService.validateUser(new User("xxxxxx123_","yy", "first", "last", "email@email.com")));
-        */
+         */
+        IReservationRepo resRepo = new ReservationRepo();
         IUserRepo repo = new UserRepo();
         IUserService service = new UserService(repo);
         for(User u : repo.findAll()){
             System.out.println(u);
         }
         System.out.println(service.validateUser(new User("xxxxxx123_","yy", "first", "last", "email@email.com")));
+
+        IReservationUserRepo reservationUserRepo = new ReservationUserRepo();
+        /*
+        ReservationUser ru = new ReservationUser(repo.findOne(1L), resRepo.findOne(1L));
+        reservationUserRepo.save(ru);
+        for(ReservationUser ruser : reservationUserRepo.findAll()){
+            System.out.println(ruser);
+        }*/
+        for(ReservationUser ruser : reservationUserRepo.filterByReservationID(1L)){
+            System.out.println(ruser);
+        }
+
     }
 }

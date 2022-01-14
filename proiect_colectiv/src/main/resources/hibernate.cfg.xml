@@ -19,5 +19,6 @@
         <mapping resource="User.hbm.xml"/>
         <mapping resource="Reservation.hbm.xml"/>
         <mapping resource="SportiveLocation.hbm.xml"/>
+        <mapping resource="ReservationUser.hbm.xml"/>
    </session-factory>
 </hibernate-configuration>
