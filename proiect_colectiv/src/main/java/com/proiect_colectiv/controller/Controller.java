@@ -1,12 +1,14 @@
 package com.proiect_colectiv.controller;
 
 
+import com.proiect_colectiv.model.FilterDTO;
 import com.proiect_colectiv.model.Reservation;
 import com.proiect_colectiv.model.SportiveLocation;
 import com.proiect_colectiv.model.User;
 import com.proiect_colectiv.registration.RegistrationRequest;
 import com.proiect_colectiv.repository.RepositoryInterfaces.IReservationRepo;
 import com.proiect_colectiv.repository.RepositoryInterfaces.ISportiveLocationRepo;
+import com.proiect_colectiv.service.IReservationService;
 import com.proiect_colectiv.service.IUserService;
 import com.proiect_colectiv.utils.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +49,9 @@ public class Controller {
     private Validator validator;
 
     @Autowired
+    private IReservationService reservationService;
+
+    @Autowired
     private IUserService userService;
 
 
@@ -56,7 +61,7 @@ public class Controller {
      * @return the list containing all SportiveLocations that exists, in JSON format
      */
 
-    @GetMapping(path = "sportivelocations", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "sportivelocations" , produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SportiveLocation>> getAllSportiveLocations() {
         List<SportiveLocation> sportiveLocations = (List<SportiveLocation>) locationRepo.findAll();
         return new ResponseEntity<>(sportiveLocations, HttpStatus.OK);
@@ -80,7 +85,7 @@ public class Controller {
         if (sl != null) {
             return new ResponseEntity<>(sl, HttpStatus.OK);
         }
-        return new ResponseEntity<>("Sportive location don't exist!", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("Sportive location don't exist!" , HttpStatus.BAD_REQUEST);
     }
 
 
@@ -89,18 +94,30 @@ public class Controller {
      *
      * @return the list of existing reservations not already passed, sorted by startDate.
      */
-    @GetMapping(path = "reservations", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "reservations" , produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAllReservations() {
-        Iterable<Reservation> reservations = reservationRepo.getFutureReservations();
         List<Reservation> responseList = new ArrayList<>();
-        if (reservations != null) {
-            for (var res : reservations) {
-                responseList.add(res);
-            }
-            return new ResponseEntity<List<Reservation>>(responseList, HttpStatus.OK);
-        }
-        return new ResponseEntity<String>("Reservations can't be found!", HttpStatus.INTERNAL_SERVER_ERROR);
+        reservationService.getFutureReservations().forEach((Reservation res) ->
+                responseList.add(res)
+        );
 
+        return new ResponseEntity<List<Reservation>>(responseList, HttpStatus.OK);
+    }
+
+    /**
+     * url :  http://localhost:8080/proiectcolectiv/reservations
+     *
+     * @return the list of existing reservations not already passed, sorted by startDate,
+     * filtered by filter non-null fields
+     */
+    @PostMapping(path = "reservations" , consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAllReservationsFiltered(@RequestBody(required = false) FilterDTO filter) {
+        List<Reservation> responseList = new ArrayList<>();
+        reservationService.getReservationsFiltered(filter).forEach((Reservation res) ->
+                responseList.add(res)
+        );
+
+        return new ResponseEntity<List<Reservation>>(responseList, HttpStatus.OK);
     }
 
     /**
@@ -112,7 +129,7 @@ public class Controller {
      *                username, firstName, lastName, password ,  as JSON object
      * @return -
      */
-    @PostMapping(path = "registration", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "registration" , consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> register(@RequestBody RegistrationRequest request) {
         boolean passwordIsValid = validator.validatePassword(request.getPassword());
         boolean usernameIsValid = validator.validateUsername(request.getUsername());
@@ -124,8 +141,8 @@ public class Controller {
             return new ResponseEntity<>(USERNAME_ALREADY_EXISTS_ERROR_MESSAGE, HttpStatus.BAD_REQUEST);
         }
         //if email field exists, it must match the email pattern
-        if (request.getEmail()!=null && !validator.validateEmail(request.getEmail())){
-            return new ResponseEntity<>(INVALID_EMAIL_ERROR_MESSAGE,HttpStatus.BAD_REQUEST);
+        if (request.getEmail() != null && !validator.validateEmail(request.getEmail())) {
+            return new ResponseEntity<>(INVALID_EMAIL_ERROR_MESSAGE, HttpStatus.BAD_REQUEST);
         }
         String encodedPassword = passwordEncoder.encode(request.getPassword());
         User user = new User(
@@ -180,7 +197,6 @@ public class Controller {
     }
 
 
-
     /**
      * url:   http://localhost:8080/proiectcolectiv/reservations/{id}/users
      * <p>
@@ -188,12 +204,10 @@ public class Controller {
      *
      * @param reservationId - id of reservation
      * @return - a list containing all users that participate to the reservation specified by reservationId
-     *         - 400 BAD_REQUEST status if the reservationId don't exists
+     * - 400 BAD_REQUEST status if the reservationId don't exists
      */
     @GetMapping(path = "reservations/{reservationId}/users")
-    public ResponseEntity<?> getUsersForReservation(@PathVariable Long reservationId)
-    {
-        //TODO: replace this with list of users that participate to specified reservation
+    public ResponseEntity<?> getUsersForReservation(@PathVariable Long reservationId) {
         List<User> users = (ArrayList<User>) userService.getUsersForReservationId(reservationId);
         if (users != null && users.size() > 0) {
             return new ResponseEntity<>(users, HttpStatus.OK);
@@ -202,7 +216,7 @@ public class Controller {
     }
 
     //test method
-    @GetMapping(path = "hello", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "hello" , produces = MediaType.APPLICATION_JSON_VALUE)
     public String hello() {
         //return new ResponseEntity<>("Hello",HttpStatus.OK);
         return "Hello";

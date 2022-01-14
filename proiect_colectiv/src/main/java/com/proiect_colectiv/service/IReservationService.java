@@ -1,5 +1,6 @@
 package com.proiect_colectiv.service;
 
+import com.proiect_colectiv.model.FilterDTO;
 import com.proiect_colectiv.model.Reservation;
 
 import java.time.LocalDate;
@@ -10,4 +11,5 @@ public interface IReservationService extends IService<Reservation> {
     Iterable<Reservation> filterReservationByDay(LocalDate time);
     Iterable<Reservation> getAllReservationsAfterDate(LocalDateTime time);
     Iterable<Reservation> getFutureReservations();
+    Iterable<Reservation> getReservationsFiltered(FilterDTO filter);
 }
