@@ -16,4 +16,9 @@ public class Constants {
 
     //can contain only ASCII letters and digits, with hyphens, underscores and spaces as internal separators
     public static final Pattern USERNAME_PATTERN=Pattern.compile("/^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$/");
+
+    public static final Pattern EMAIL_PATTERN=Pattern.compile("^[a-zA-Z0-9_+&*-]+(?:\\."+
+          "[a-zA-Z0-9_+&*-]+)*@" +
+          "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+          "A-Z]{2,7}$");
 }
