@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.proiect_colectiv.utils.Constants.EMAIL_PATTERN;
+import static com.proiect_colectiv.utils.Constants.USERNAME_PATTERN;
+
+
 @Service
 public class UserService implements IUserService{
 
@@ -48,24 +52,15 @@ public class UserService implements IUserService{
         return userRepo.findOneByUsername(username);
     }
 
+
     @Override
     public boolean validateUser(User user) {
-        String regexUsername = "^[A-Za-z0-9_]\\w{5,29}$";
-        Pattern pUsername = Pattern.compile(regexUsername);
-        if (user.getUsername() == null) {
+        if (user.getUsername() == null || user.getEmail() == null) {
             return false;
         }
-        Matcher mUsername = pUsername.matcher(user.getUsername());
 
-        String regexEmail = "^[a-zA-Z0-9_+&*-]+(?:\\."+
-                "[a-zA-Z0-9_+&*-]+)*@" +
-                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
-                "A-Z]{2,7}$";
-        Pattern pEmail = Pattern.compile(regexEmail);
-        if (user.getEmail() == null)
-            return false;
-        Matcher mEmail = pEmail.matcher(user.getEmail());
-
+        Matcher mUsername = USERNAME_PATTERN.matcher(user.getUsername());
+        Matcher mEmail = EMAIL_PATTERN.matcher(user.getEmail());
 
         return mUsername.matches() && mEmail.matches();
     }

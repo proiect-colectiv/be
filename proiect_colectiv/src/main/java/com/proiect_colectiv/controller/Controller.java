@@ -29,9 +29,10 @@ public class Controller {
     private static final String USERNAME_ALREADY_EXISTS_ERROR_MESSAGE = "Username already exists!";
     private static final String SUCCESS_MESSAGE = "Succes!";
     private static final String INVALID_ID_ERROR_MESSAGE = "Invalid id!";
+    private static final String INVALID_EMAIL_ERROR_MESSAGE = "Invalid email!";
 
 
-//    @Autowired
+    //    @Autowired
 //    IReservationService reservationService;
 
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -124,15 +125,17 @@ public class Controller {
         if (userService.findUserByUsername(request.getUsername()) != null) {
             return new ResponseEntity<>(USERNAME_ALREADY_EXISTS_ERROR_MESSAGE, HttpStatus.BAD_REQUEST);
         }
-
+        //if email field exists, it must match the email pattern
+        if (request.getEmail()!=null && !validator.validateEmail(request.getEmail())){
+            return new ResponseEntity<>(INVALID_EMAIL_ERROR_MESSAGE,HttpStatus.BAD_REQUEST);
+        }
         String encodedPassword = passwordEncoder.encode(request.getPassword());
-        //TODO: integrate email into Request (part of User constructor)
         User user = new User(
                 request.getUsername(),
                 encodedPassword,
                 request.getFirstName(),
                 request.getLastName(),
-                "emai@email.com"
+                request.getEmail()
         );
 
         userService.save(user);
@@ -154,7 +157,7 @@ public class Controller {
     public ResponseEntity<?> getUser(@PathVariable Long id) {
         User user = userService.findOne(id);
         if (user != null) {
-            return new ResponseEntity<>(user, HttpStatus.OK);
+            return new ResponseEntity<User>(user, HttpStatus.OK);
         }
         return new ResponseEntity<>(INVALID_ID_ERROR_MESSAGE, HttpStatus.NOT_FOUND);
     }
