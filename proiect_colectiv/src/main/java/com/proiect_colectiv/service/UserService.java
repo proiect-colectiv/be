@@ -35,7 +35,7 @@ public class UserService implements IUserService{
 
     @Override
     public Iterable<User> findAll() {
-        return null;
+        return userRepo.findAll();
     }
 
     @Override

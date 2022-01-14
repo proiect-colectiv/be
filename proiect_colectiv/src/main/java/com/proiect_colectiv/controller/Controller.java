@@ -87,13 +87,11 @@ public class Controller {
     /**
      * url :  http://localhost:8080/proiectcolectiv/reservations
      *
-     * @return
+     * @return the list of existing reservations not already passed, sorted by startDate.
      */
     @GetMapping(path = "reservations", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAllReservations() {
-
-        // code to use after proper data retrieve from db
-        Iterable<Reservation> reservations = reservationRepo.findAll();
+        Iterable<Reservation> reservations = reservationRepo.getFutureReservations();
         List<Reservation> responseList = new ArrayList<>();
         if (reservations != null) {
             for (var res : reservations) {
@@ -196,7 +194,7 @@ public class Controller {
     public ResponseEntity<?> getUsersForReservation(@PathVariable Long reservationId)
     {
         //TODO: replace this with list of users that participate to specified reservation
-        List<User> users = (ArrayList<User>) userService.findAll();
+        List<User> users = (ArrayList<User>) userService.getUsersForReservationId(reservationId);
         if (users != null && users.size() > 0) {
             return new ResponseEntity<>(users, HttpStatus.OK);
         }
