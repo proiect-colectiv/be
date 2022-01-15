@@ -1,4 +1,4 @@
-package com.proiect_colectiv.registration;
+package com.proiect_colectiv.model.registration;
 
 
 
