@@ -1,6 +1,7 @@
 package com.proiect_colectiv.controller;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.proiect_colectiv.model.FilterDTO;
 import com.proiect_colectiv.model.Reservation;
 import com.proiect_colectiv.model.SportiveLocation;
@@ -17,13 +18,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import static com.proiect_colectiv.utils.JwtTokenUtil.createToken;
 
 
 @CrossOrigin
@@ -34,6 +36,8 @@ public class Controller {
     private static final String SUCCESS_MESSAGE = "Succes!";
     private static final String INVALID_ID_ERROR_MESSAGE = "Invalid id!";
     private static final String INVALID_EMAIL_ERROR_MESSAGE = "Invalid email!";
+    private static final String NO_SUCH_USERNAME_ERROR_MESSAGE = "Username not exists!";
+    private static final String INVALID_PASSWORD_ERROR_MESSAGE = "Invalid password!";
 
 
     //    @Autowired
@@ -163,8 +167,22 @@ public class Controller {
 
     @PostMapping(path = "authenticate", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequest request) {
-        AuthenticationResponse response = new AuthenticationResponse(request.getUsername() + request.getPassword() + "-dummytoken");
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        User user = userService.findUserByUsername(request.getUsername());
+        //no user with provided username or bad password
+        if (user == null) {
+            return new ResponseEntity<>(NO_SUCH_USERNAME_ERROR_MESSAGE, HttpStatus.BAD_REQUEST);
+        }
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            return new ResponseEntity<>(INVALID_PASSWORD_ERROR_MESSAGE, HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            //generating token
+            String jwtToken = createToken(user);
+            return new ResponseEntity<>(new AuthenticationResponse(jwtToken), HttpStatus.OK);
+        } catch (JsonProcessingException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**

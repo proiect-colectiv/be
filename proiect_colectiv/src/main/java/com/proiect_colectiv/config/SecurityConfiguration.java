@@ -2,10 +2,7 @@ package com.proiect_colectiv.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-
-import java.net.http.HttpClient;
 
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {

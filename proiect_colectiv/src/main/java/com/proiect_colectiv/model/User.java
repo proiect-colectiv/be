@@ -1,8 +1,10 @@
 package com.proiect_colectiv.model;
 
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.io.Serializable;
 
-public class User extends Entity implements Serializable {
+public class User extends Entity implements Serializable{
 
     private String username;
     private String password;

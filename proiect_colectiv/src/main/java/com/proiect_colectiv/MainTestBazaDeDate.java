@@ -1,32 +1,41 @@
 package com.proiect_colectiv;
 
-import com.proiect_colectiv.model.Day;
-import com.proiect_colectiv.model.Reservation;
-import com.proiect_colectiv.model.SportiveLocation;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.proiect_colectiv.model.User;
-import com.proiect_colectiv.repository.RepositoryImplementations.ReservationRepo;
-import com.proiect_colectiv.repository.RepositoryImplementations.ReservationUserRepo;
-import com.proiect_colectiv.repository.RepositoryImplementations.SportiveLocationRepo;
-import com.proiect_colectiv.repository.RepositoryImplementations.UserRepo;
-import com.proiect_colectiv.repository.RepositoryInterfaces.IReservationRepo;
-import com.proiect_colectiv.repository.RepositoryInterfaces.IReservationUserRepo;
-import com.proiect_colectiv.repository.RepositoryInterfaces.ISportiveLocationRepo;
-import com.proiect_colectiv.repository.RepositoryInterfaces.IUserRepo;
-import com.proiect_colectiv.service.IReservationService;
-import com.proiect_colectiv.service.IUserService;
-import com.proiect_colectiv.service.ReservationService;
-import com.proiect_colectiv.service.UserService;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Arrays;
-import java.util.HashSet;
+import static com.proiect_colectiv.utils.JwtTokenUtil.*;
 
 public class MainTestBazaDeDate {
 
     //Testam un pic baza de date, pup
     public static void main(String[] args) {
+
+
+        User u = new User("cineva", "parolaaa", "Nicu", "Aron", "cineva@undeva.com");
+        u.setID(1l);
+
+    //        try {
+    //            String payload = createPayload(u);
+    //            System.out.println(payload);
+    //
+    //            User u2 = getUserFromPayload(payload);
+    //            System.out.println(u2);
+    //        } catch (JsonProcessingException e) {
+    //            throw new RuntimeException("Error creating payload!!");
+    //        }
+
+        try {
+            String token = createToken(u);
+            System.out.println(token);
+
+            if(isValid(token)){
+                System.out.println("Mergeeeee");
+                User user = (User) getTokenPayloadAsObject(token);
+                System.out.println(user);
+            }
+        } catch (JsonProcessingException e) {
+            System.out.println("Error creating token");
+        }
 
         //ASTA MERGE
         /*
@@ -115,12 +124,12 @@ public class MainTestBazaDeDate {
 
         service.getFutureReservations();*/
 
-        //TEST getUsersForReservationId(Long reservationId)
-        IUserRepo userRepo = new UserRepo();
-        IReservationUserRepo reservationUserRepo = new ReservationUserRepo();
-        IUserService userService = new UserService(userRepo,reservationUserRepo);
-
-        userService.getUsersForReservationId(1L);
+//        //TEST getUsersForReservationId(Long reservationId)
+//        IUserRepo userRepo = new UserRepo();
+//        IReservationUserRepo reservationUserRepo = new ReservationUserRepo();
+//        IUserService userService = new UserService(userRepo,reservationUserRepo);
+//
+//        userService.getUsersForReservationId(1L);
 
     }
 }
