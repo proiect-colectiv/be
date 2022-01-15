@@ -2,7 +2,8 @@ package com.proiect_colectiv.controller;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.proiect_colectiv.model.FilterDTO;
+import com.proiect_colectiv.model.DTO.FilterDTO;
+import com.proiect_colectiv.model.DTO.ReservationDTO;
 import com.proiect_colectiv.model.Reservation;
 import com.proiect_colectiv.model.SportiveLocation;
 import com.proiect_colectiv.model.User;
@@ -25,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.proiect_colectiv.utils.JwtTokenUtil.createToken;
+import static com.proiect_colectiv.utils.JwtTokenUtil.*;
 
 
 @CrossOrigin
@@ -106,7 +107,6 @@ public class Controller {
         reservationService.getFutureReservations().forEach((Reservation res) ->
                 responseList.add(res)
         );
-
         return new ResponseEntity<List<Reservation>>(responseList, HttpStatus.OK);
     }
 
@@ -186,6 +186,22 @@ public class Controller {
     }
 
     /**
+     * url:   http://localhost:8080/proiectcolectiv/user
+     * <p>
+     * Provide access to currend logged user data
+     *
+     * @return - the details of current user, if a valid token is present in header
+     */
+    @GetMapping(path = "user", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getUser(@RequestHeader("Authorization") String token) {
+        if(!isValid(token)){
+            return new ResponseEntity<>("Authorization is required!", HttpStatus.FORBIDDEN);
+        }
+        User user = (User) getTokenPayloadAsObject(token);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    /**
      * url:   http://localhost:8080/proiectcolectiv/users/{id}
      * <p>
      * Provide access to user data through user id
@@ -239,6 +255,14 @@ public class Controller {
             return new ResponseEntity<>(users, HttpStatus.OK);
         }
         return new ResponseEntity<>(INVALID_ID_ERROR_MESSAGE, HttpStatus.BAD_REQUEST);
+    }
+
+    @PostMapping(path= "reservations/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> createReservation(@RequestBody ReservationDTO reservationDTO, @RequestHeader("Authorization") String token){
+        if(token == null || !isValid(token)){
+            return new ResponseEntity<>("Authorization is required!", HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>("Merge", HttpStatus.OK);
     }
 
     //test method

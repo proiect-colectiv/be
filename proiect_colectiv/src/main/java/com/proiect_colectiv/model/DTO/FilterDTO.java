@@ -1,4 +1,4 @@
-package com.proiect_colectiv.model;
+package com.proiect_colectiv.model.DTO;
 
 public class FilterDTO {
     private Integer playerNumber;

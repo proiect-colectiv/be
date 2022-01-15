@@ -1,6 +1,6 @@
 package com.proiect_colectiv.service;
 
-import com.proiect_colectiv.model.FilterDTO;
+import com.proiect_colectiv.model.DTO.FilterDTO;
 import com.proiect_colectiv.model.Reservation;
 import com.proiect_colectiv.repository.RepositoryInterfaces.IReservationRepo;
 import org.springframework.beans.factory.annotation.Autowired;

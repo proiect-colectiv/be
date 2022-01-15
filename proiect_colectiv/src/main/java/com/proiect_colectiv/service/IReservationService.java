@@ -1,6 +1,6 @@
 package com.proiect_colectiv.service;
 
-import com.proiect_colectiv.model.FilterDTO;
+import com.proiect_colectiv.model.DTO.FilterDTO;
 import com.proiect_colectiv.model.Reservation;
 
 import java.time.LocalDate;
